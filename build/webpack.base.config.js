@@ -3,6 +3,10 @@ const webpack = require('webpack');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 const VueLoaderPlugin = require('vue-loader/lib/plugin');
+
+function resolve(dir) {
+    return path.join(__dirname, '..', dir);
+}
 module.exports = {
     module: {
         rules: [
@@ -24,48 +28,6 @@ module.exports = {
                 )
             }
             ,
-            { //加载less
-                test: /\.less$/,
-                use: [
-                    'vue-style-loader',
-                    {
-                        loader: "css-loader"
-
-                    },
-                    {
-                        loader: "less-loader"
-                    },
-                    'postcss-loader'
-
-                ]
-            },
-            { //加载scss
-                test: /\.scss$/,
-                use: [
-                    'vue-style-loader',
-                    'css-loader',
-                    {
-                        loader: 'sass-loader',
-                        options: {
-                            // 你也可以从一个文件读取，例如 `variables.scss`
-                            // 如果 sass-loader 版本 < 8，这里使用 `data` 字段
-                            prependData: `$color: red;`
-                        }
-                    },
-                    'postcss-loader',
-                ]
-            },
-            { //加载css
-                test: /\.css$/,
-                use: [
-                    'vue-style-loader',
-                    {
-                        loader: 'css-loader',
-                        options: { importLoaders: 1 }
-                    },
-                    'postcss-loader'
-                ]
-            },
             { //加载图片
                 test: /\.(png|svg|jpg|gif)$/,
                 use: [
@@ -93,6 +55,12 @@ module.exports = {
 
         ]
     },
+    resolve: {
+        extensions: ['.js', '.vue'],
+        alias: {
+            '@': resolve('src')
+        }
+    },
     plugins: [
         //替换 html的插件
         new HtmlWebpackPlugin({
@@ -102,6 +70,7 @@ module.exports = {
         //清除 /dist 文件夹
         new CleanWebpackPlugin({}),
         // .vue文件处理插件
-        new VueLoaderPlugin()
+        new VueLoaderPlugin(),
+        
     ]
 }
