@@ -29,10 +29,12 @@ module.exports = merge(common, {
 
                     },
                     {
-                        loader: "less-loader"
-                    },
-                    'postcss-loader'
+                        loader: "postcss-loader"
 
+                    },
+                    {
+                        loader: "less-loader"
+                    }
                 ]
             },
             { //加载scss
@@ -40,6 +42,7 @@ module.exports = merge(common, {
                 use: [
                     'vue-style-loader',
                     'css-loader',
+                    'postcss-loader',
                     {
                         loader: 'sass-loader',
                         options: {
@@ -48,7 +51,7 @@ module.exports = merge(common, {
                             prependData: `$color: red;`
                         }
                     },
-                    'postcss-loader',
+                   
                 ]
             },
             { //加载css

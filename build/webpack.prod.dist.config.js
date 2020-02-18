@@ -2,6 +2,7 @@ const path = require('path');
 const webpack = require('webpack');
 const merge = require('webpack-merge');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
+const OptimizeCSSAssetsPlugin = require("optimize-css-assets-webpack-plugin");
 const common = require('./webpack.base.config.js');
 
 process.env.NODE_ENV = 'production';
@@ -22,14 +23,23 @@ module.exports = merge(common, {
                 use: [
                     MiniCssExtractPlugin.loader,
                     {
-                        loader: "css-loader"
+                        loader: "css-loader",
+                        options:{
+                            sourceMap:true
+                        }
 
+                    },{
+                        loader:"postcss-loader",
+                        options:{
+                            sourceMap:true
+                        }
                     },
                     {
-                        loader: "less-loader"
-                    },
-                    'postcss-loader'
-
+                        loader: "less-loader",
+                        options:{
+                            sourceMap:true
+                        }
+                    }
                 ]
             },
             { //加载scss
@@ -37,6 +47,7 @@ module.exports = merge(common, {
                 use: [
                     MiniCssExtractPlugin.loader,
                     'css-loader',
+                    'postcss-loader',
                     {
                         loader: 'sass-loader',
                         options: {
@@ -45,7 +56,6 @@ module.exports = merge(common, {
                             prependData: `$color: red;`
                         }
                     },
-                    'postcss-loader',
                 ]
             },
             { //加载css
@@ -62,9 +72,12 @@ module.exports = merge(common, {
         ]
     },
     plugins: [
+        //自定义全局环境变量
         new webpack.DefinePlugin({
             'process.env.NODE_ENV': JSON.stringify('production')
         }),
+         //压缩
+        new OptimizeCSSAssetsPlugin({}),
         //css 分离
         new MiniCssExtractPlugin({
             filename: '[name].css'
