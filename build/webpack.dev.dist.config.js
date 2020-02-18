@@ -10,7 +10,7 @@ module.exports = merge(common, {
         app: './src/index.js'
     },
     output: {
-        filename: '[name].[hash].js',
+        filename: '[name].js',
         path: path.resolve(__dirname, '../dist')
     },
     devtool: 'eval-source-map',
@@ -73,7 +73,6 @@ module.exports = merge(common, {
         new webpack.HotModuleReplacementPlugin(),
         new webpack.DefinePlugin({
             'process.env.NODE_ENV': JSON.stringify('development'),
-            version:"666"
         })
     ],
     mode: "development"
