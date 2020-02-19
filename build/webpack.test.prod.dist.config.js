@@ -3,31 +3,21 @@ const webpack = require('webpack');
 const merge = require('webpack-merge');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const OptimizeCSSAssetsPlugin = require("optimize-css-assets-webpack-plugin");
+const HtmlWebpackPlugin = require('html-webpack-plugin');
+
 const common = require('./webpack.base.config.js');
 
-process.env.NODE_ENV = 'production';
+process.env.NODE_ENV = 'development';
 
 module.exports = merge(common, {
     entry: {
-        lgView: './src/index.js'
+        lgView: './lab/lab.js'
     },
     output: {
         path: path.resolve(__dirname, '../dist'),
-        publicPath: '/dist/',
-        filename: '[name].min.js',
-        library: 'lgView',
-        libraryTarget: 'umd',
-        umdNamedDefine: true
+        filename: '[name].[hash:8].min.js',
     },
-    externals: {
-        vue: {
-            root: 'Vue',
-            commonjs: 'vue',
-            commonjs2: 'vue',
-            amd: 'vue'
-        }
-    },
-    devtool: 'source-map',
+    devtool: 'eval-source-map',
     module: {
         rules: [
             { //加载less
@@ -84,6 +74,12 @@ module.exports = merge(common, {
         ]
     },
     plugins: [
+          //替换 html的插件
+          new HtmlWebpackPlugin({
+            title: '',
+            template: path.resolve(__dirname, '../lab/lab.html'),
+            inject:'body' //标签插入到head
+        }),
         //自定义全局环境变量
         new webpack.DefinePlugin({
             'process.env.NODE_ENV': JSON.stringify('production')
@@ -95,5 +91,5 @@ module.exports = merge(common, {
             filename: '[name].min.css'
         })
     ],
-    mode: "production"
+    mode: "development"
 });

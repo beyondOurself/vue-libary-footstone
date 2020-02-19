@@ -58,6 +58,7 @@ module.exports = {
     resolve: {
         extensions: ['.js', '.vue'],
         alias: {
+            'vue': 'vue/dist/vue.esm.js',
             '@': resolve('src')
         }
     },
@@ -66,6 +67,7 @@ module.exports = {
         new HtmlWebpackPlugin({
             title: '',
             template: path.resolve(__dirname, '../index.html'),
+            inject:'head' //标签插入到head
         }),
         //清除 /dist 文件夹
         new CleanWebpackPlugin({}),
