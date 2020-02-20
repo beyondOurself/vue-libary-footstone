@@ -27,7 +27,7 @@ module.exports = merge(common, {
             { //加载less
                 test: /\.less$/,
                 use: [
-                    MiniCssExtractPlugin.loader,
+                    'vue-style-loader',
                     {
                         loader: "css-loader",
                         options: {
@@ -51,7 +51,7 @@ module.exports = merge(common, {
             { //加载scss
                 test: /\.scss$/,
                 use: [
-                    MiniCssExtractPlugin.loader,
+                    'vue-style-loader',
                     'css-loader',
                     'postcss-loader',
                     {
@@ -67,7 +67,7 @@ module.exports = merge(common, {
             { //加载css
                 test: /\.css$/,
                 use: [
-                    MiniCssExtractPlugin.loader,
+                    'vue-style-loader',
                     {
                         loader: 'css-loader',
                         options: { importLoaders: 1 }
@@ -94,9 +94,9 @@ module.exports = merge(common, {
         //压缩
         new OptimizeCSSAssetsPlugin({}),
         //css 分离
-        new MiniCssExtractPlugin({
-            filename: '[name].min.css'
-        })
+        // new MiniCssExtractPlugin({
+        //     filename: '[name].min.css'
+        // })
     ],
     mode: "development"
 });

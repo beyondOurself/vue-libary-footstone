@@ -1,19 +1,19 @@
-<style lang='less'>
-//全局样式
-</style>
-<style lang='less' scoped>
-//局部样式
-</style>
+
 <template>
   <div class="box">
-    <h1>测试路由</h1>
-    <nav>
-      <router-link to="/component1">组件1</router-link>
-      <router-link to="/component2">组件2</router-link>
-    </nav>
-
     <!-- 路由匹配到的组件将渲染在这里 -->
-    <router-view></router-view>
+    <router-view class="rv-block"></router-view>
+    <nav>
+      <ul>
+        <li>
+          <router-link to="/component1">组件1</router-link>
+        </li>
+        <li>
+          <router-link to="/component2">组件2</router-link>
+        </li>
+      </ul>
+    </nav>
+    
   </div>
 </template>
 <script>
@@ -23,3 +23,34 @@ export default {
   }
 };
 </script>
+<style lang='less' scoped>
+//局部样式
+@paddingv :20px;
+.box {
+  text-align: center;
+  ul {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+  }
+  ul > li {
+    list-style: none;
+    background-color: aquamarine;
+    border-radius: 10px;
+    margin: 10px;
+    padding: 10px 10%;
+    white-space: nowrap;
+   
+  }
+  a {
+    text-decoration: none;
+    
+  }
+  .rv-block {
+    background-color: #eaff56;
+    margin: 20px;
+    padding: 10px;
+
+  }
+}
+</style>
