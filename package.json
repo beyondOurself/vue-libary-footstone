@@ -6,7 +6,7 @@
   "scripts": {
     "dev": "webpack-dev-server --open  --port 8989 --config build/webpack.dev.dist.config.js",
     "build": "webpack  --config  build/webpack.prod.dist.config.js",
-    "lab": "webpack --watch --config  build/webpack.dev.lab.config.js",
+    "lab": "webpack-dev-server  --open  --port 8989 --config  build/webpack.dev.lab.config.js",
     "test:dev": "webpack-dev-server   --open  --port 8989 --config  build/webpack.test.dev.dist.config.js",
     "test:prod": "webpack --watch --config  build/webpack.test.prod.dist.config.js"
   },
