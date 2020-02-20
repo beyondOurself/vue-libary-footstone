@@ -1,8 +1,6 @@
 import myComponent from './components/my-component'
 import myComponent2 from './components/my-component2'
 
-console.log('6666')
-
 const components = {
   myComponent,
   myComponent2
