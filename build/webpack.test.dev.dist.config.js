@@ -1,22 +1,23 @@
 const path = require('path');
 const webpack = require('webpack');
 const merge = require('webpack-merge');
+const MiniCssExtractPlugin = require('mini-css-extract-plugin');
+const OptimizeCSSAssetsPlugin = require("optimize-css-assets-webpack-plugin");
 const common = require('./webpack.base.config.js');
 
-process.env.NODE_ENV = 'development';
+process.env.NODE_ENV = 'production';
 
 module.exports = merge(common, {
     entry: {
-        lgView: './src/index.js'
+        lgView: './lab/lab.js'
     },
     output: {
-        filename: '[name].js',
         path: path.resolve(__dirname, '../dist'),
-    },
-    devtool: 'eval-source-map',
-    devServer: {
-        contentBase: './dist',
-        hot: true
+        publicPath: '/dist/',
+        filename: '[name].min.js',
+        library: 'lgView',
+        libraryTarget: 'umd',
+        umdNamedDefine: true
     },
     externals: {
         vue: {
@@ -26,29 +27,37 @@ module.exports = merge(common, {
             amd: 'vue'
         }
     },
+    devtool: 'source-map',
     module: {
         rules: [
             { //加载less
                 test: /\.less$/,
                 use: [
-                    'vue-style-loader',
+                    MiniCssExtractPlugin.loader,
                     {
-                        loader: "css-loader"
+                        loader: "css-loader",
+                        options: {
+                            sourceMap: true
+                        }
 
+                    }, {
+                        loader: "postcss-loader",
+                        options: {
+                            sourceMap: true
+                        }
                     },
                     {
-                        loader: "postcss-loader"
-
-                    },
-                    {
-                        loader: "less-loader"
+                        loader: "less-loader",
+                        options: {
+                            sourceMap: true
+                        }
                     }
                 ]
             },
             { //加载scss
                 test: /\.scss$/,
                 use: [
-                    'vue-style-loader',
+                    MiniCssExtractPlugin.loader,
                     'css-loader',
                     'postcss-loader',
                     {
@@ -59,13 +68,12 @@ module.exports = merge(common, {
                             prependData: `$color: red;`
                         }
                     },
-
                 ]
             },
             { //加载css
                 test: /\.css$/,
                 use: [
-                    'vue-style-loader',
+                    MiniCssExtractPlugin.loader,
                     {
                         loader: 'css-loader',
                         options: { importLoaders: 1 }
@@ -76,12 +84,16 @@ module.exports = merge(common, {
         ]
     },
     plugins: [
-        /**HMR */
-        new webpack.NamedModulesPlugin(),
-        new webpack.HotModuleReplacementPlugin(),
+        //自定义全局环境变量
         new webpack.DefinePlugin({
-            'process.env.NODE_ENV': JSON.stringify('development'),
+            'process.env.NODE_ENV': JSON.stringify('production')
+        }),
+        //压缩
+        new OptimizeCSSAssetsPlugin({}),
+        //css 分离
+        new MiniCssExtractPlugin({
+            filename: '[name].min.css'
         })
     ],
-    mode: "development"
+    mode: "production"
 });
