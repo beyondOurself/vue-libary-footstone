@@ -9,11 +9,10 @@ process.env.NODE_ENV = 'production';
 
 module.exports = merge(common, {
     entry: {
-        lgView: './lab/lab.js'
+        lgView: './src/index.js'
     },
     output: {
         path: path.resolve(__dirname, '../dist'),
-        publicPath: '/dist/',
         filename: '[name].min.js',
         library: 'lgView',
         libraryTarget: 'umd',
