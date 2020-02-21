@@ -1,6 +1,7 @@
 <template>
     <div>
-        <h1>这是组件1</h1>
+         <h1>字体图标</h1>
+    <i class="lg-icon lg-icon-test"></i>
     </div>
 </template>
 

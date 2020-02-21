@@ -37,7 +37,12 @@ module.exports = {
             { //加载字体
                 test: /\.(woff|woff2|eot|ttf|otf)$/,
                 use: [
-                    'file-loader'
+                    {
+                        loader: 'url-loader',
+                        options: {
+                            limit: 8192
+                        }
+                    }
                 ]
             },
             { //加载数据
@@ -67,12 +72,12 @@ module.exports = {
         new HtmlWebpackPlugin({
             title: '',
             template: path.resolve(__dirname, '../index.html'),
-            inject:'head' //标签插入到head
+            inject: 'head' //标签插入到head
         }),
         //清除 /dist 文件夹
         new CleanWebpackPlugin({}),
         // .vue文件处理插件
         new VueLoaderPlugin(),
-        
+
     ]
 }
